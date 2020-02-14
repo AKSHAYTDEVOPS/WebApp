@@ -1,0 +1,47 @@
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pheonix
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: pheonix
+    spec:
+      hostAliases:
+      - ip: "3.20.222.246"
+        hostnames:
+          - "database"
+      - ip: "10.1.2.3"
+        hostnames:
+          - "qa"
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: pheonix
+        image: nehadockerdtd/pheonix
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pheonix
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: pheonix
