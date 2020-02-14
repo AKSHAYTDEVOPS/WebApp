@@ -31,7 +31,7 @@ node {
     }
      stage('docker build/push') {
      docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-       def app = docker.build("nagasainag/docker-nodejs-demo-pipeline:${commit_id}", '.').push()
+       def app = docker.build("nehadockerdtd/pheonix:${commit_id}", '.').push()
      }
 
     }
