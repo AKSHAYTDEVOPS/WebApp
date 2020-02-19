@@ -23,7 +23,7 @@ node {
     }
 
     stage('Sonar'){
-    sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://35.224.163.3:9000/ -Dsonar.login=daa3f86869fe853d6321d54d2ad9b8931a91dacd -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
+    sh 'clean package sonar:sonar -Dsonar.host.url=http://35.224.163.3:9000/ -Dsonar.login=daa3f86869fe853d6321d54d2ad9b8931a91dacd -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.inclusions=**/test/java/servlet/createpage_junit.java -Dsonar.exclusions=**/test/java/servlet/createpage_junit.java'
     }
 	
     stage('Maven build') {
