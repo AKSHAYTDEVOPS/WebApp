@@ -11,12 +11,12 @@ node {
 
  rtMaven.tool = "maven"
  
-slackSend message: "started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)";
+slackSend message: "started ${env.JOB_NAME} , BRANCH: ${env.BRANCH_NAME},${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)";
     stage('Clone sources') {
      //   git url: ''
 
         checkout([$class: 'GitSCM', branches: [[name: '*/Develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/AKSHAYTDEVOPS/webapp.git']]])
-//commitId= sh(returnStdout: true, script: 'git rev-parse HEAD');
+
 pom=readMavenPom file: 'pom.xml'
 version= pom.version   
     }
