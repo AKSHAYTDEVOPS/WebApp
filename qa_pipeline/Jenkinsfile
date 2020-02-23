@@ -5,13 +5,19 @@ node {
     // Create an Artifactory Maven instance.
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
+    def commitId
     
  rtMaven.tool = "maven"
+stage("deploy to QA"){
+    when {
 
+        branch 'Develop'
+    }
     stage('Clone sources') {
      //   git url: ''
 
         checkout([$class: 'GitSCM', branches: [[name: '*/Develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/AKSHAYTDEVOPS/webapp.git']]])
+commitId= sh(returnStdout: true, script: 'git rev-parse HEAD');   
     }
 
     stage('Artifactory configuration') {
@@ -37,9 +43,16 @@ stage("build & SonarQube analysis") {
     }
      stage('docker build/push') {
      docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-       def app = docker.build("nehadockerdtd/pheonix", '.').push()
+       def app = docker.build("nehadockerdtd/pheonix:${commitId}", '.').push()
      }
 
     }
-	 
+}
+stage('deploy to Prod'){
+    when {
+        branch 'master'
+    }
+    
+}
+
 }
