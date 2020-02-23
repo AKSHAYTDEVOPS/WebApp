@@ -7,10 +7,11 @@ node {
     def buildInfo
     //def commitId
     def version
-    
+
+
  rtMaven.tool = "maven"
  
-
+slackSend message: 'started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)';
     stage('Clone sources') {
      //   git url: ''
 
