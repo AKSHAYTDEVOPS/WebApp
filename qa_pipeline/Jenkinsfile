@@ -8,11 +8,10 @@ node {
     def commitId
     
  rtMaven.tool = "maven"
-stage("deploy to QA"){
-    when {
+  when {
 
         branch 'Develop'
-    }
+
     stage('Clone sources') {
      //   git url: ''
 
@@ -48,10 +47,10 @@ stage("build & SonarQube analysis") {
 
     }
 }
-stage('deploy to Prod'){
-    when {
+ when {
         branch 'master'
-    }
+
+   
     
 }
 
